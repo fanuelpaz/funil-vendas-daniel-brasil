@@ -93,10 +93,11 @@
           var actions = document.createElement('div'); actions.className = 'actions';
           var hint = document.createElement('small'); hint.textContent = 'Edite, copie ou salve a sua versão.';
           var buttons = document.createElement('div'); buttons.className = 'buttons';
-          var copy = makeButton('Copiar','copy'); var save = makeButton('Salvar','save');
+          var close = makeButton('Fechar etapa','copy'); var copy = makeButton('Copiar','copy'); var save = makeButton('Salvar','save');
+          close.addEventListener('click', function() { openIndex = null; render(); });
           copy.addEventListener('click', function() { navigator.clipboard.writeText(textarea.value).then(function(){ copy.textContent='Copiado!'; setTimeout(function(){copy.textContent='Copiar';},1300); }); });
           save.addEventListener('click', function() { edits[index] = textarea.value; localStorage.setItem(storageKey, JSON.stringify(edits)); save.textContent='Salvo!'; setTimeout(function(){save.textContent='Salvar';},1300); });
-          buttons.append(copy,save); actions.append(hint,buttons); editor.append(label,textarea,actions); card.appendChild(editor);
+          buttons.append(close,copy,save); actions.append(hint,buttons); editor.append(label,textarea,actions); card.appendChild(editor);
         }
         flow.appendChild(card);
         if (index < items.length - 1) { var arrow = document.createElement('div'); arrow.className = 'arrow'; if (index === 1) { var arrowLabel=document.createElement('small'); arrowLabel.textContent='caminhos'; arrow.appendChild(arrowLabel); } flow.appendChild(arrow); }
